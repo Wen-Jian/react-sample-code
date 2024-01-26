@@ -1,11 +1,3 @@
-# playground-client
+# React sample code
 
-This library was generated with [Nx](https://nx.dev).
-
-## Building
-
-Run `nx build playground-client` to build the library.
-
-## Running unit tests
-
-Run `nx test playground-client` to execute the unit tests via [Jest](https://jestjs.io).
+This is part of codes from my private code for React.js. It is not supposed to be runned alone
