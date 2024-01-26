@@ -1,0 +1,68 @@
+{
+  "name": "playground-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/playground-client",
+        "main": "apps/playground-client/src/index.ts",
+        "tsConfig": "apps/playground-client/tsconfig.lib.json",
+        "assets": ["apps/playground-client/src/assets/*"]
+      }
+    },
+    "buildclient": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "development",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/playground-client",
+        "commands": [
+          "rm -rf public && tsc --project apps/playground-client/tsconfig.lib.json && webpack --mode=development --node-env=production --config=apps/playground-client/webpack.config.client.js",
+          "tsc --project apps/playground-client/tsconfig.client.json"
+        ]
+      }
+    },
+    "buildserver": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "development",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "commands": [
+          "webpack --mode=development --node-env=production --config=apps/playground-client/webpack.config.server.js"
+        ]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs playground-client {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/playground-client/**/*.ts",
+          "apps/playground-client/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/playground-client/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

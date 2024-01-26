@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist",
+    "declaration": false,
+    "module": "nodenext",
+    "moduleResolution": "NodeNext",
+    // "paths": {
+    //   "~/*": ["./src/*"]
+    // }
+    "typeRoots": ["../../node_modules/@types", "./src/types"]
+  },
+  "include": ["src/**/*.tsx", "index.d.ts", "src/thirdParty/framework/*.js"],
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts", "packages/**/*.tsx"],
+}
